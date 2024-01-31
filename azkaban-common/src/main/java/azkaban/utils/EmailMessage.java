@@ -34,6 +34,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import org.apache.log4j.Logger;
 
+//---------------NEW ADD START----------------------------------------
+import com.sun.mail.util.MailSSLSocketFactory;
+import java.security.GeneralSecurityException;
+//---------------NEW ADD END----------------------------------------
+
 public class EmailMessage {
 
   private static final int MAX_EMAIL_RETRY_COUNT = 5;
@@ -178,6 +183,24 @@ public class EmailMessage {
     props.put("mail.smtp.connectiontimeout", _connectionTimeout);
     props.put("mail.smtp.starttls.enable", this._tls);
     props.put("mail.smtp.ssl.trust", this._mailHost);
+
+//---------------NEW ADD START----------------------------------------
+    //--For Office365--
+/*    props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+    //props.put("mail.transport.protocol", "smtp");
+*/
+    //--For QQMail--
+    MailSSLSocketFactory sf;
+    try {
+        sf = new MailSSLSocketFactory();
+        sf.setTrustAllHosts(true);
+        props.put("mail.smtp.ssl.enable", "true");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.socketFactory", sf);
+    } catch (GeneralSecurityException e) {
+        e.printStackTrace();
+    }
+//------------NEW ADD END--------------------------------------------
 
     final JavaxMailSender sender = this.creator.createSender(props);
     final Message message = sender.createMessage();

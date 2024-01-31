@@ -39,9 +39,9 @@
       <form id="login-form" role="form">
         <fieldset>
           <legend>Login</legend>
-          <input type="text" class="form-control" name="username" id="username"
+          <input type="text" class="form-control" name="username" id="username" autocomplete="new-password"
                  placeholder="Username">
-          <input type="password" class="form-control" name="password" id="password"
+          <input type="password" class="form-control" name="password" id="password" autocomplete="new-password"
                  placeholder="${passwordPlaceholder}">
           <button type="button" class="btn btn-primary btn-lg btn-block" id="login-submit">Login
           </button>
